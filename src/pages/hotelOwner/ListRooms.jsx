@@ -23,6 +23,7 @@ const ListRooms = () => {
     }, 500);
   };
 
+  
   // Optimistic UI for toggling room availability - now purely frontend
   const toggleAvailability = async (roomId) => {
     setToggleLoading(roomId);
