@@ -15,7 +15,15 @@ const Layout = () => {
   }, [isOwner, setIsOwner]);
 
   return (
-    
+    <div className="flex flex-col h-screen">
+      <Navbar />
+      <div className="flex h-full">
+        <Sidebar />
+        <div className="flex-1 pt-10 md:px-10 p-4 h-full">
+          <Outlet />
+        </div>
+      </div>
+    </div>
   );
 };
 
