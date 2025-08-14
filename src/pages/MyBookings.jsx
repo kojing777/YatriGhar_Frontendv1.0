@@ -32,6 +32,7 @@ const MyBookings = () => {
           <div className="w-1/3">Payments</div>
         </div>
 
+
         {bookings.map((booking) => (
           <div
             key={booking._id}
