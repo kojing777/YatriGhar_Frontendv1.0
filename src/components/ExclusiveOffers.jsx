@@ -1,54 +1,165 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Title from "./Title";
 import { assets, exclusiveOffers } from "../assets/assets";
+import { FaChevronRight, FaRegClock, FaTag } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const ExclusiveOffers = () => {
-  return (
-    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 pt-20 pb-30">
-      <div className="flex flex-col md:flex-row items-center justify-between w-full">
-        <Title
-          align="left"
-          title="Exclusive Offers"
-          subTitle="Check out our exclusive offers"
-        />
-        <button className="group flex items-center gap-2 font-medium cursor-pointer max-md:mt-12">
-          View All Offers
-          <img
-            className="group-hover:translate-x-1 transition-all"
-            src={assets.arrowIcon}
-            alt="arrowIcon"
-          />
-        </button>
-      </div>
+  const [currentBg, setCurrentBg] = useState(0);
+  const backgrounds = [
+    "linear-gradient(135deg, rgba(253,230,138,0.1) 0%, rgba(254,243,199,0.05) 100%)",
+    "linear-gradient(135deg, rgba(254,215,170,0.1) 0%, rgba(255,237,213,0.05) 100%)",
+    "linear-gradient(135deg, rgba(252,165,165,0.1) 0%, rgba(254,226,226,0.05) 100%)"
+  ];
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-full">
-        {exclusiveOffers.map((item) => (
-          <div
-            key={item._id}
-            className="group relative flex flex-col items-start justify-between gap-1 pt-12 md:pt-18 px-4 rounded-xl text-white bg-no-repeat bg-cover bg-center"
-            style={{ backgroundImage: `url(${item.image})` }}
-          >
-            <p className="px-3 py-1 absolute top-4 left-4 bg-white  text-gray-800 font-medium rounded-full">
-              {item.priceOff} % off
-            </p>
-            <div>
-              <p className="text-2xl font-medium font-playfair">{item.title}</p>
-              <p>{item.description}</p>
-              <p className="text-xs text-white/70 mt-3">
-                expires {item.expiryDate}
-              </p>
-            </div>
-            <button className="flex items-center gap-2 font-medium cursor-pointer mt-4 mb-5">
-              View Offer
-              <img
-                className="invert group-hover:translate-x-1"
-                src={assets.arrowIcon}
-                alt="arrowIcon"
-              />
-            </button>
-          </div>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % backgrounds.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative overflow-hidden px-6 md:px-16 lg:px-24 py-20">
+      {/* Animated Background */}
+      <div className="absolute inset-0 -z-10">
+        {backgrounds.map((bg, index) => (
+          <motion.div
+            key={index}
+            className="absolute inset-0 transition-all duration-1000"
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: currentBg === index ? 0.2 : 0,
+              background: bg
+            }}
+            transition={{ duration: 2 }}
+          />
         ))}
       </div>
+
+      {/* Floating decorative elements */}
+      <div className="absolute top-20 right-10 hidden lg:block animate-float">
+        <div className="bg-white/10 backdrop-blur-sm p-3 rounded-full shadow-lg border border-white/20">
+          <FaTag className="text-amber-400 text-xl" />
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between w-full mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Title
+              align="left"
+              title="Exclusive Offers"
+              subTitle="Special deals curated just for you"
+            />
+          </motion.div>
+
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="group flex items-center gap-2 font-medium cursor-pointer mt-6 md:mt-0 px-6 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg shadow-md transition-all"
+          >
+            View All Offers
+            <FaChevronRight className="group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </div>
+
+        {/* Offers Grid */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {exclusiveOffers.map((item, index) => (
+            <motion.div
+              key={item._id}
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+              className="group relative flex flex-col items-start justify-between gap-4 p-6 rounded-xl text-white bg-no-repeat bg-cover bg-center overflow-hidden shadow-lg hover:shadow-xl transition-all min-h-[300px]"
+              style={{ backgroundImage: `url(${item.image})` }}
+            >
+              {/* Dark overlay for better text visibility */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all"></div>
+              
+              {/* Discount badge */}
+              <div className="relative">
+                <span className="px-4 py-1 bg-white text-amber-600 font-bold rounded-full text-sm shadow-md">
+                  {item.priceOff}% OFF
+                </span>
+              </div>
+
+              {/* Content */}
+              <div className="relative mt-auto">
+                <h3 className="text-2xl font-bold font-playfair mb-2">{item.title}</h3>
+                <p className="text-white/90 mb-4">{item.description}</p>
+                
+                {/* Expiry date */}
+                <div className="flex items-center gap-2 text-sm text-white/80">
+                  <FaRegClock />
+                  <span>Expires {item.expiryDate}</span>
+                </div>
+              </div>
+
+              {/* View button */}
+              <button className="relative flex items-center gap-2 font-medium cursor-pointer mt-4 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all border border-white/30">
+                View Offer
+                <FaChevronRight className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Countdown Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl p-6 text-white shadow-lg"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="mb-4 md:mb-0">
+              <h3 className="text-xl font-bold font-playfair mb-1">Limited Time Offers</h3>
+              <p className="text-white/90">Book now before these deals expire!</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold">03</div>
+                <div className="text-xs">Days</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">12</div>
+                <div className="text-xs">Hours</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">45</div>
+                <div className="text-xs">Minutes</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Animation Styles */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
