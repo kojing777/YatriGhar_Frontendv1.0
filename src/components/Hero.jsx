@@ -63,7 +63,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative text-white z-10 w-full max-w-6xl mx-auto">
+      <div className="relative mt-10 text-white z-10 w-full max-w-6xl ">
         {/* Welcome Tag */}
         <div className="bg-white/80 text-gray-800 px-4 py-1 rounded-full inline-flex items-center gap-2 font-medium tracking-wide shadow-md animate-fadeIn">
           <span className="text-amber-600">🏔️</span>
@@ -71,7 +71,7 @@ const Hero = () => {
         </div>
 
         {/* Main Heading */}
-        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-2xl mt-6 leading-tight animate-slideUp">
+        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold max-w-2xl mt-4 leading-tight animate-slideUp">
           <span className="bg-gradient-to-r from-amber-300 via-white to-rose-200 bg-clip-text text-transparent">
             Discover Your Perfect
           </span>
