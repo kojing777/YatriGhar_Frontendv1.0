@@ -36,7 +36,7 @@ const Hero = () => {
       {/* Content */}
       <div className="relative text-white z-10">
         <p className="bg-white/70 text-gray-800 px-4 py-1 rounded-full mt-20 font-medium tracking-wide shadow-md animate-fadeIn">
-          🏔️ <span className="font-semibold">Welcome to Your Nepali Getaway</span>
+          🏔️ <span className="font-semibold">Welcome to Your Nepali Gateway</span>
         </p>
 
         <h1 className="font-playfair text-2xl md:text-5xl md:text-[56px] md:leading-[56px] font-extrabold max-w-2xl mt-4 
