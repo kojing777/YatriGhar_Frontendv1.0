@@ -25,20 +25,21 @@ const Hero = () => {
     <div className='flex flex-col items-start justify-center px-6 md:px-16 lg:px-24 xl:px-32 text-white bg-[url("/src/assets/nepal1.jpg")] bg-no-repeat bg-cover bg-center h-screen overflow-hidden'>
       {/* Tagline */}
       <p className="bg-[#49b9ff]/60 px-4 py-1 rounded-full mt-20 font-medium tracking-wide shadow-md animate-fadeIn">
-        🇳🇵 <span className="font-semibold">Authentic Nepali Hospitality</span>
+        🏔️ <span className="font-semibold">Your Nepali Stay Starts Here</span>
       </p>
 
       {/* Heading */}
       <h1 className="font-playfair text-2xl md:text-5xl md:text-[56px] md:leading-[56px] font-extrabold max-w-2xl mt-4 
         bg-gradient-to-r from-yellow-300 via-white to-pink-200 bg-clip-text text-transparent drop-shadow-lg animate-slideUp">
-        Experience Nepal Like a Local with Our Homestays
+        Find the Perfect Room & Feel Right at Home in Nepal
       </h1>
 
       {/* Subtext */}
       <p className="max-w-130 mt-2 text-sm md:text-base bg-black/30 px-4 py-2 rounded-md backdrop-blur-sm shadow-sm animate-fadeIn delay-200">
-        Immerse yourself in <span className="font-semibold text-yellow-200">Nepali culture</span> while enjoying 
-        <span className="font-semibold text-pink-200"> warm hospitality</span> in traditional homes 
-        across the <span className="italic">Himalayas</span>.
+        From cozy homestays to luxury hotels, we’ll help you book your ideal stay.
+        Enjoy <span className="font-semibold text-yellow-200">warm welcomes</span>,
+        <span className="font-semibold text-pink-200"> authentic food</span>,
+        and stunning views of the <span className="italic">Himalayas</span>.
       </p>
 
       {/* Search Form */}
@@ -49,7 +50,7 @@ const Hero = () => {
         <div>
           <div className="flex items-center gap-2 font-semibold">
             <MdEditCalendar className="text-[#49b9ff]" />
-            <label htmlFor="destinationInput">Destination</label>
+            <label htmlFor="destinationInput">Where would you like to go?</label>
           </div>
           <input
             onChange={(e) => setDestinations(e.target.value)}
@@ -58,7 +59,7 @@ const Hero = () => {
             id="destinationInput"
             type="text"
             className="rounded border border-gray-200 px-3 py-1.5 mt-1.5 text-sm outline-none focus:ring-2 focus:ring-[#49b9ff]"
-            placeholder="Where to?"
+            placeholder="Search city or destination"
             required
           />
           <datalist id="destinations">
@@ -71,7 +72,7 @@ const Hero = () => {
         <div>
           <div className="flex items-center gap-2 font-semibold">
             <MdEditCalendar className="text-[#49b9ff]" />
-            <label htmlFor="checkIn">Check in</label>
+            <label htmlFor="checkIn">Check-in Date</label>
           </div>
           <input
             id="checkIn"
@@ -83,7 +84,7 @@ const Hero = () => {
         <div>
           <div className="flex items-center gap-2 font-semibold">
             <MdEditCalendar className="text-[#49b9ff]" />
-            <label htmlFor="checkOut">Check out</label>
+            <label htmlFor="checkOut">Check-out Date</label>
           </div>
           <input
             id="checkOut"
@@ -106,7 +107,7 @@ const Hero = () => {
 
         <button className="flex items-center justify-center mt-5 gap-2 rounded-md bg-[#49b9ff] hover:bg-[#3aa7e8] py-2.5 px-5 text-white font-semibold shadow-md transition-all my-auto cursor-pointer max-md:w-full max-md:py-1">
           <FaSearch />
-          <span>Search</span>
+          <span>Find Rooms</span>
         </button>
       </form>
 
