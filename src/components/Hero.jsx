@@ -111,6 +111,11 @@ const Hero = () => {
         </button>
       </form>
 
+      {/* Quick Booking Guarantee */}
+      <p className="mt-3 text-sm md:text-base bg-black/30 px-4 py-1 rounded-full shadow-sm backdrop-blur-sm animate-fadeIn delay-600">
+        ✅ <span className="font-semibold text-green-300">Quick Booking Guarantee:</span> Reserve in under 60 seconds & pay at the hotel.
+      </p>
+
       {/* Tailwind custom animations */}
       <style>
         {`
@@ -133,6 +138,9 @@ const Hero = () => {
           }
           .delay-400 {
             animation-delay: 0.4s;
+          }
+          .delay-600 {
+            animation-delay: 0.6s;
           }
         `}
       </style>
