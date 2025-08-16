@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { cities } from "../assets/assets";
-import { FaSearch, FaMapMarkerAlt, FaCalendarAlt, FaUserFriends } from "react-icons/fa";
+import {
+  FaSearch,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaUserFriends,
+} from "react-icons/fa";
 import { RiHotelFill } from "react-icons/ri";
 import { GiMountainRoad } from "react-icons/gi";
 import { useAppContext } from "../context/AppContext";
@@ -34,13 +39,15 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative h-screen overflow-hidden flex flex-col items-start justify-center px-4 sm:px-6 md:px-16 lg:px-24 xl:px-32">
+    <div className="relative pt-[64px] md:pt-[80px] h-screen overflow-hidden flex flex-col items-start justify-center px-4 sm:px-6 md:px-16 lg:px-24 xl:px-32">
       {/* Background Image Slider */}
       <div className="absolute inset-0 transition-all duration-1000 ease-in-out">
         {images.map((img, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === currentImage ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+              index === currentImage ? "opacity-100" : "opacity-0"
+            }`}
             style={{ backgroundImage: `url(${img})` }}
           ></div>
         ))}
@@ -63,7 +70,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative mt-10 text-white z-10 w-full max-w-6xl ">
+      <div className="relative mt-6 text-white z-10 w-full max-w-6xl ">
         {/* Welcome Tag */}
         <div className="bg-white/80 text-gray-800 px-4 py-1 rounded-full inline-flex items-center gap-2 font-medium tracking-wide shadow-md animate-fadeIn">
           <span className="text-amber-600">🏔️</span>
@@ -83,8 +90,8 @@ const Hero = () => {
 
         {/* Subheading */}
         <p className="max-w-xl mt-4 text-sm sm:text-base bg-white/70 text-gray-800 px-4 py-2 rounded-lg backdrop-blur-sm shadow-md animate-fadeIn delay-200">
-          Experience authentic Nepali hospitality in handpicked accommodations. 
-          From cozy tea house stays to luxury resorts with Himalayan views - 
+          Experience authentic Nepali hospitality in handpicked accommodations.
+          From cozy tea house stays to luxury resorts with Himalayan views -
           we've got your perfect getaway covered.
         </p>
 
@@ -183,7 +190,7 @@ const Hero = () => {
         </form>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap gap-3 mt-4 animate-fadeIn delay-600">
+        <div className="hidden md:flex flex-wrap gap-3 mt-4 animate-fadeIn delay-600">
           <div className="bg-white/80 text-gray-800 px-3 py-1 rounded-full flex items-center gap-1 text-xs font-medium">
             <span className="text-green-600">✓</span>
             <span>No booking fees</span>
@@ -200,7 +207,7 @@ const Hero = () => {
       </div>
 
       {/* Scrolling Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 hidden md:block">
+      <div className="hidden md:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
         <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
           <div className="w-1 h-2 bg-white rounded-full mt-2 animate-scroll"></div>
         </div>
