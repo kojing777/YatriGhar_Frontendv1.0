@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import { testimonials } from "../assets/assets";
 import StarRating from "./StarRating";
 import { 
@@ -15,6 +15,18 @@ import { IoIosRibbon } from "react-icons/io";
 import { GiSuitcase } from "react-icons/gi";
 
 const Testimonials = () => {
+  // State to track liked testimonials
+  const [liked, setLiked] = useState(
+    testimonials.reduce((acc, t) => {
+      acc[t.id] = false;
+      return acc;
+    }, {})
+  );
+
+  const toggleLike = (id) => {
+    setLiked((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <div className="relative overflow-hidden px-4 sm:px-6 md:px-16 lg:px-24 py-16 md:py-20 bg-slate-50">
       {/* Decorative elements */}
@@ -54,9 +66,15 @@ const Testimonials = () => {
               className={`relative bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20 transform hover:-translate-y-1 animate-fade-in delay-${index * 100} group`}
             >
               {/* Favorite icon */}
-              <button className="absolute top-4 right-4 text-gray-300 hover:text-amber-500 transition-colors duration-200">
-                <FaRegHeart className="group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
-                <FaHeart className="absolute top-0 right-0 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <button 
+                onClick={() => toggleLike(testimonial.id)}
+                className="absolute top-4 right-4 text-gray-300 hover:text-amber-500 transition-colors duration-200"
+              >
+                {!liked[testimonial.id] ? (
+                  <FaRegHeart className="transition-opacity duration-300" />
+                ) : (
+                  <FaHeart className="text-amber-500 transition-opacity duration-300" />
+                )}
               </button>
 
               <div className="flex items-center gap-4 mb-6">
@@ -125,7 +143,7 @@ const Testimonials = () => {
       </div>
 
       {/* Custom Animation Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
@@ -147,21 +165,11 @@ const Testimonials = () => {
         .animate-fade-in {
           animation: fadeIn 0.8s ease-out forwards;
         }
-        .delay-100 {
-          animation-delay: 100ms;
-        }
-        .delay-200 {
-          animation-delay: 200ms;
-        }
-        .delay-300 {
-          animation-delay: 300ms;
-        }
-        .delay-400 {
-          animation-delay: 400ms;
-        }
-        .delay-500 {
-          animation-delay: 500ms;
-        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
       `}</style>
     </div>
   );

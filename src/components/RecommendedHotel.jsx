@@ -16,6 +16,7 @@ const RecommendedHotels = () => {
     "linear-gradient(135deg, rgba(252,165,165,0.15) 0%, rgba(254,226,226,0.1) 100%)",
   ];
 
+  // Cycle background
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % backgrounds.length);
@@ -23,18 +24,16 @@ const RecommendedHotels = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Filter hotels based on searched cities
   useEffect(() => {
-    const filterHotels = () => {
-      if (searchedCities?.length > 0 && rooms?.length > 0) {
-        const filteredHotels = rooms.filter((room) =>
-          searchedCities.includes(room.hotel?.city)
-        );
-        setRecommended(filteredHotels);
-      } else {
-        setRecommended([]);
-      }
-    };
-    filterHotels();
+    if (searchedCities?.length && rooms?.length) {
+      const filteredHotels = rooms.filter((room) =>
+        searchedCities.includes(room.hotel?.city)
+      );
+      setRecommended(filteredHotels);
+    } else {
+      setRecommended([]);
+    }
   }, [rooms, searchedCities]);
 
   if (!searchedCities?.length) return null;
@@ -57,7 +56,7 @@ const RecommendedHotels = () => {
         ))}
       </div>
 
-      {/* Floating decorative elements */}
+      {/* Floating decorative element */}
       <div className="absolute top-20 right-10 hidden lg:block animate-float">
         <div className="bg-white/10 backdrop-blur-sm p-3 rounded-full shadow-lg border border-white/20">
           <FaMapMarkerAlt className="text-amber-400 text-xl" />
@@ -65,7 +64,7 @@ const RecommendedHotels = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative">
-        {/* Header Section */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,25 +108,23 @@ const RecommendedHotels = () => {
         </motion.div>
 
         {/* Location Tags */}
-        {searchedCities.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-2 mb-8"
-          >
-            {searchedCities.map((city, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center bg-white/90 px-3 py-1 rounded-full text-xs font-medium text-gray-700 shadow-sm border border-gray-200"
-              >
-                <FaMapMarkerAlt className="text-amber-500 mr-1" />
-                {city}
-              </span>
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-2 mb-8"
+        >
+          {searchedCities.map((city, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center bg-white/90 px-3 py-1 rounded-full text-xs font-medium text-gray-700 shadow-sm border border-gray-200"
+            >
+              <FaMapMarkerAlt className="text-amber-500 mr-1" />
+              {city}
+            </span>
+          ))}
+        </motion.div>
 
         {/* Hotels Grid */}
         {recommended.length > 0 ? (
@@ -185,21 +182,18 @@ const RecommendedHotels = () => {
         )}
       </div>
 
-      {/* Animation Styles */}
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
+      {/* Floating Animation Styles */}
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
           }
-          50% {
-            transform: translateY(-10px);
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
           }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };

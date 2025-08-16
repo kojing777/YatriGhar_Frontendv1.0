@@ -3,12 +3,8 @@ import {
   FaPaperPlane,
   FaCheckCircle,
   FaRegLightbulb,
-  FaMapMarkedAlt,
-  FaGift,
-  FaRegCalendarAlt,
-  FaQuoteLeft,
-  FaChevronRight,
-  FaRegSmileBeam
+  FaRegSmileBeam,
+  FaQuoteLeft
 } from "react-icons/fa";
 import { IoMdSend, IoIosRibbon } from "react-icons/io";
 import { LiaBoxOpenSolid } from "react-icons/lia";
@@ -161,38 +157,10 @@ const NewsLetter = () => {
                   </p>
                 </div>
               </div>
-
-
-            
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Custom Animation Styles */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        @keyframes float-delay {
-          0%, 100% { transform: translateY(-5px); }
-          50% { transform: translateY(5px); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-float-delay {
-          animation: float-delay 6s ease-in-out infinite 1s;
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 };

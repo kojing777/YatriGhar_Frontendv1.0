@@ -10,9 +10,9 @@ const FeaturedDestination = () => {
   const [currentBg, setCurrentBg] = useState(0);
 
   const backgrounds = [
-    "linear-gradient(135deg, rgba(253,230,138,0.1) 0%, rgba(254,243,199,0.05) 100%)",
-    "linear-gradient(135deg, rgba(254,215,170,0.1) 0%, rgba(255,237,213,0.05) 100%)",
-    "linear-gradient(135deg, rgba(252,165,165,0.1) 0%, rgba(254,226,226,0.05) 100%)"
+    "bg-gradient-to-br from-yellow-100/10 to-yellow-50/5",
+    "bg-gradient-to-br from-orange-200/10 to-yellow-100/5",
+    "bg-gradient-to-br from-red-200/10 to-pink-100/5"
   ];
 
   const destinationTypes = [
@@ -37,31 +37,31 @@ const FeaturedDestination = () => {
         {backgrounds.map((bg, index) => (
           <motion.div
             key={index}
-            className="absolute inset-0 transition-all duration-1000"
+            className={`absolute inset-0 ${bg} transition-all duration-1000`}
             initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: currentBg === index ? 0.2 : 0,
-              background: bg
-            }}
+            animate={{ opacity: currentBg === index ? 0.2 : 0 }}
             transition={{ duration: 2 }}
           />
         ))}
       </div>
 
-      {/* Floating decorative elements */}
-      <div className="absolute top-20 left-10 hidden lg:block animate-float">
+      {/* Floating Decorations */}
+      {/* Top-left icon */}
+      <div className="absolute top-16 left-4 md:left-10 hidden md:block animate-bounce-slow">
         <div className="bg-white/10 backdrop-blur-sm p-3 rounded-full shadow-lg border border-white/20">
           <FaMountain className="text-amber-400 text-xl" />
         </div>
       </div>
-      <div className="absolute bottom-1/4 right-8 hidden lg:block animate-float delay-1000">
+
+      {/* Bottom-right icon */}
+      <div className="absolute bottom-1/4 right-4 md:right-8 hidden md:block animate-bounce-slow delay-1000">
         <div className="bg-white/10 backdrop-blur-sm p-3 rounded-full shadow-lg border border-white/20">
           <GiVillage className="text-white text-xl" />
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto relative">
-        {/* Header Section */}
+        {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -100,7 +100,7 @@ const FeaturedDestination = () => {
           </div>
         </motion.div>
 
-        {/* Featured Hotels Grid */}
+        {/* Hotels Grid */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -141,14 +141,14 @@ const FeaturedDestination = () => {
         </motion.div>
       </div>
 
-      {/* Animation Styles */}
-      <style jsx>{`
-        @keyframes float {
+      {/* Tailwind Animations */}
+      <style>{`
+        @keyframes bounce-slow {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
+        .animate-bounce-slow {
+          animation: bounce-slow 6s ease-in-out infinite;
         }
         .delay-1000 {
           animation-delay: 1s;

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Title from "./Title";
-import { assets, exclusiveOffers } from "../assets/assets";
+import { exclusiveOffers } from "../assets/assets";
 import { FaChevronRight, FaRegClock, FaTag } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const ExclusiveOffers = () => {
   const [currentBg, setCurrentBg] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
   const backgrounds = [
     "linear-gradient(135deg, rgba(253,230,138,0.1) 0%, rgba(254,243,199,0.05) 100%)",
     "linear-gradient(135deg, rgba(254,215,170,0.1) 0%, rgba(255,237,213,0.05) 100%)",
@@ -19,6 +21,32 @@ const ExclusiveOffers = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Dynamic countdown with seconds
+  useEffect(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 3); // 3 days from now
+
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="relative overflow-hidden px-6 md:px-16 lg:px-24 py-20">
       {/* Animated Background */}
@@ -28,10 +56,7 @@ const ExclusiveOffers = () => {
             key={index}
             className="absolute inset-0 transition-all duration-1000"
             initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: currentBg === index ? 0.2 : 0,
-              background: bg
-            }}
+            animate={{ opacity: currentBg === index ? 0.2 : 0, background: bg }}
             transition={{ duration: 2 }}
           />
         ))}
@@ -80,7 +105,7 @@ const ExclusiveOffers = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {exclusiveOffers.map((item, index) => (
+          {exclusiveOffers.map((item) => (
             <motion.div
               key={item._id}
               whileHover={{ y: -5 }}
@@ -88,29 +113,22 @@ const ExclusiveOffers = () => {
               className="group relative flex flex-col items-start justify-between gap-4 p-6 rounded-xl text-white bg-no-repeat bg-cover bg-center overflow-hidden shadow-lg hover:shadow-xl transition-all min-h-[300px]"
               style={{ backgroundImage: `url(${item.image})` }}
             >
-              {/* Dark overlay for better text visibility */}
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-all"></div>
-              
-              {/* Discount badge */}
               <div className="relative">
                 <span className="px-4 py-1 bg-white text-amber-600 font-bold rounded-full text-sm shadow-md">
                   {item.priceOff}% OFF
                 </span>
               </div>
 
-              {/* Content */}
               <div className="relative mt-auto">
                 <h3 className="text-2xl font-bold font-playfair mb-2">{item.title}</h3>
                 <p className="text-white/90 mb-4">{item.description}</p>
-                
-                {/* Expiry date */}
                 <div className="flex items-center gap-2 text-sm text-white/80">
                   <FaRegClock />
                   <span>Expires {item.expiryDate}</span>
                 </div>
               </div>
 
-              {/* View button */}
               <button className="relative flex items-center gap-2 font-medium cursor-pointer mt-4 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-all border border-white/30">
                 View Offer
                 <FaChevronRight className="group-hover:translate-x-1 transition-transform" />
@@ -119,7 +137,7 @@ const ExclusiveOffers = () => {
           ))}
         </motion.div>
 
-        {/* Countdown Banner */}
+        {/* Dynamic Countdown Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -134,16 +152,20 @@ const ExclusiveOffers = () => {
             </div>
             <div className="flex items-center gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold">03</div>
+                <div className="text-2xl font-bold">{timeLeft.days}</div>
                 <div className="text-xs">Days</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold">12</div>
+                <div className="text-2xl font-bold">{timeLeft.hours}</div>
                 <div className="text-xs">Hours</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold">45</div>
+                <div className="text-2xl font-bold">{timeLeft.minutes}</div>
                 <div className="text-xs">Minutes</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">{timeLeft.seconds}</div>
+                <div className="text-xs">Seconds</div>
               </div>
             </div>
           </div>
@@ -151,7 +173,7 @@ const ExclusiveOffers = () => {
       </div>
 
       {/* Animation Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
