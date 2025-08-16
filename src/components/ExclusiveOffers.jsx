@@ -89,7 +89,7 @@ const ExclusiveOffers = () => {
               style={{ backgroundImage: `url(${item.image})` }}
             >
               {/* Dark overlay for better text visibility */}
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all"></div>
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-all"></div>
               
               {/* Discount badge */}
               <div className="relative">

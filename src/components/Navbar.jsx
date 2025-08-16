@@ -8,7 +8,7 @@ import { useAppContext } from "../context/AppContext";
 
 const BookIcon = () => (
   <svg
-    className="w-4 h-4 text-gray-700"
+    className="w-4 h-4 text-amber-400"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -38,7 +38,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openSignIn } = useClerk();
   const location = useLocation();
-
   const { user, navigate, isOwner, setShowHotelReg } = useAppContext();
 
   useEffect(() => {
@@ -50,7 +49,6 @@ const Navbar = () => {
     }
 
     setIsScrolled((prev) => (location.pathname !== "/" ? true : prev));
-    // Handle scroll event to change navbar style
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -61,41 +59,34 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0  left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
-        isScrolled
-          ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
-          : "py-4 md:py-6"
-      }`}
-    >
+  className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 h-[64px] md:h-[80px] ${
+    isScrolled
+      ? "bg-slate-900/20 shadow-md text-white backdrop-blur-lg"
+      : "text-white"
+  }`}
+>
+
       {/* Logo */}
       <Link to="/">
         <img
           src={logo}
           alt="logo"
           className={`w-35 max-h-full object-contain transition-all duration-300 ${
-            isScrolled
-              ? "filter invert-0 brightness-100"
-              : "filter invert brightness-200"
+            isScrolled ? "brightness-100" : "brightness-150"
           }`}
         />
       </Link>
 
       {/* Desktop Nav */}
-      <div className="hidden font-semibold md:flex items-center gap-4 lg:gap-8">
+      <div className="hidden md:flex items-center gap-6 font-semibold">
         {navLinks.map((link, i) => (
           <Link
             key={i}
             to={link.path}
-            className={`group flex flex-col gap-0.5 ${
-              isScrolled ? "text-gray-700" : "text-white"
-            }`}
+            className="relative group transition-colors duration-300 hover:text-amber-400"
           >
             {link.name}
-            <div
-              className={`${
-                isScrolled ? "bg-gray-700" : "bg-white"
-              } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
-            />
+            <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-amber-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
         ))}
 
@@ -104,18 +95,16 @@ const Navbar = () => {
             onClick={() =>
               isOwner ? navigate("/owner") : setShowHotelReg(true)
             }
-            className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
-              isScrolled ? "text-black" : "text-white"
-            } transition-all`}
+            className="border border-amber-400 px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all duration-300 hover:bg-amber-400 hover:text-slate-900"
           >
             {isOwner ? "Dashboard" : "List your hotel"}
           </button>
         )}
-        
-        {/* Demo Mode - Direct Access to Owner Dashboard */}
+
+        {/* Demo Mode */}
         <button
           onClick={() => navigate("/owner")}
-          className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600 transition-all`}
+          className="border  px-4 py-1.5 text-sm font-light rounded-full cursor-pointer bg-slate-50 text-slate-500 hover:bg-amber-300 transition-all duration-300"
           title="Demo: Access Owner Dashboard"
         >
           Demo Dashboard
@@ -124,12 +113,10 @@ const Navbar = () => {
 
       {/* Desktop Right */}
       <div className="hidden md:flex items-center gap-3">
-        <img
-          src={assets.searchIcon}
-          alt="search"
-          className={`${
-            isScrolled && "invert"
-          }  h-10 transition-all duration-500`}
+        <IoSearch
+          className={`h-6 w-6 transition-colors duration-300 ${
+            isScrolled ? "text-amber-400" : "text-white"
+          }`}
         />
 
         {user ? (
@@ -145,7 +132,7 @@ const Navbar = () => {
         ) : (
           <button
             onClick={openSignIn}
-            className="bg-black text-white px-8 py-2.5 rounded-full ml-4 transition-all duration-500"
+            className="bg-amber-400 text-slate-900 px-6 py-2.5 rounded-full ml-4 transition-all duration-300 hover:bg-amber-500"
           >
             Login
           </button>
@@ -169,13 +156,15 @@ const Navbar = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           src={assets.menuIcon}
           alt="menu"
-          className={`${isScrolled && "invert"} h-4`}
+          className={`h-5 transition-colors duration-300 ${
+            isScrolled ? "invert" : ""
+          }`}
         />
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full h-screen bg-slate-900 text-white flex flex-col md:hidden items-center justify-center gap-6 font-medium text-lg transition-transform duration-500 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -183,13 +172,18 @@ const Navbar = () => {
           className="absolute top-4 right-4"
           onClick={() => setIsMenuOpen(false)}
         >
-          <img src={assets.closeIcon} alt="closemenu" className="h-6.5" />
+          <img src={assets.closeIcon} alt="closemenu" className="h-6" />
         </button>
 
         {navLinks.map((link, i) => (
-          <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
+          <Link
+            key={i}
+            to={link.path}
+            onClick={() => setIsMenuOpen(false)}
+            className="hover:text-amber-400 transition-colors duration-300"
+          >
             {link.name}
-          </a>
+          </Link>
         ))}
 
         {user && (
@@ -197,20 +191,18 @@ const Navbar = () => {
             onClick={() =>
               isOwner ? navigate("/owner") : setShowHotelReg(true)
             }
-            className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all"
+            className="border border-amber-400 px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all duration-300 hover:bg-amber-400 hover:text-slate-900"
           >
             {isOwner ? "Dashboard" : "List your hotel"}
           </button>
         )}
 
-        {/* Demo Mode - Direct Access to Owner Dashboard */}
         <button
           onClick={() => {
             navigate("/owner");
             setIsMenuOpen(false);
           }}
-          className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600 transition-all"
-          title="Demo: Access Owner Dashboard"
+          className="border border-amber-500 px-4 py-1 text-sm font-light rounded-full cursor-pointer bg-amber-500 text-slate-900 hover:bg-amber-600 transition-all duration-300"
         >
           Demo Dashboard
         </button>
@@ -218,7 +210,7 @@ const Navbar = () => {
         {!user && (
           <button
             onClick={openSignIn}
-            className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500"
+            className="bg-amber-400 text-slate-900 px-8 py-2.5 rounded-full transition-all duration-300 hover:bg-amber-500"
           >
             Login
           </button>
