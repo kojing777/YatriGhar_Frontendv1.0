@@ -13,6 +13,7 @@ const CheckBox = ({ label, selected = false, onChange = () => {} }) => {
         checked={selected}
         onChange={(e) => onChange(e.target.checked, label)}
       />
+
       <span className="font-light select-none">{label}</span>
     </label>
   );
