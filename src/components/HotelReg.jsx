@@ -2,10 +2,15 @@ import React from "react";
 import { assets, cities } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
+import {
+  FaHotel,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaCity,
+} from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 const HotelReg = () => {
-  // This component is used to register a hotel
-
   const { setShowHotelReg, setIsOwner } = useAppContext();
   const [name, setName] = React.useState("");
   const [contact, setContact] = React.useState("");
@@ -15,8 +20,7 @@ const HotelReg = () => {
   const onSubmitHandler = async (event) => {
     try {
       event.preventDefault();
-      
-      // Simulate successful hotel registration without backend call
+
       if (name && contact && address && city) {
         toast.success("Hotel registered successfully (Demo Mode)");
         setIsOwner(true);
@@ -32,96 +36,120 @@ const HotelReg = () => {
   return (
     <div
       onClick={() => setShowHotelReg(false)}
-      className="fixed top-0 bottom-0 left-0 right-0 z-100   flex items-center justify-center bg-black/70"
+      className="fixed top-0 bottom-0 left-0 right-0 z-[100] flex items-center justify-center bg-black/70"
     >
+      {/* animated background */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <div className="absolute w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse top-20 left-10"></div>
+        <div className="absolute w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse bottom-20 right-10"></div>
+      </div>
+
       <form
         onSubmit={onSubmitHandler}
         onClick={(e) => e.stopPropagation()}
-        action=""
-        className="flex bg-white rounded-xl max-w-4xl max-md:mx-2"
+        className="flex bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full max-md:mx-4 animate-fadeIn"
       >
         <img
           src={assets.regImage}
-          alt="registration image"
-          className="w-1/2 rounded-xl hidden md:block"
+          alt="registration"
+          className="w-1/2 hidden md:block object-cover"
         />
 
-        <div className="relative flex flex-col items-center md:w-1/2 p-8 md:p-10">
-          <img
-            src={assets.closeIcon}
+        <div className="relative flex flex-col items-center md:w-1/2 w-full p-6 md:p-10">
+          <IoClose
             onClick={() => setShowHotelReg(false)}
-            alt="close icon"
-            className="absolute top-4 right-4 h-4 w-4 cursor-pointer"
+            className="absolute top-4 right-4 h-6 w-6 text-gray-500 cursor-pointer hover:text-red-500 transition"
           />
-          <p className="text-2xl font-semibold mt-6">Register Your Hotel</p>
+
+          <p className="text-3xl font-bold text-indigo-600 mt-4">
+            Register Your Hotel
+          </p>
+          <p className="text-gray-500 text-sm mt-1">
+            Fill in the details to get started
+          </p>
 
           {/* hotel name */}
           <div className="w-full mt-6">
-            <label htmlFor="hotelName" className="font-medium text-gray-500">
+            <label htmlFor="hotelName" className="font-medium text-gray-600">
               Hotel Name
             </label>
-            <input
-              type="text"
-              id="hotelName"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              className="w-full border border-gray-200 rounded  px-3 py-2.5 mt-1 outline-indigo-500 font-light"
-              placeholder="Enter your hotel name"
-              required
-            />
+            <div className="flex items-center border border-gray-200 rounded px-3 py-2.5 mt-1 focus-within:border-indigo-500 transition">
+              <FaHotel className="text-indigo-500 mr-2" />
+              <input
+                type="text"
+                id="hotelName"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                className="w-full outline-none font-light"
+                placeholder="Enter your hotel name"
+                required
+              />
+            </div>
           </div>
+
           {/* phone */}
           <div className="w-full mt-6">
-            <label htmlFor="contact" className="font-medium text-gray-500">
+            <label htmlFor="contact" className="font-medium text-gray-600">
               Contact Number
             </label>
-            <input
-              type="text"
-              id="contact"
-              onChange={(e) => setContact(e.target.value)}
-              value={contact}
-              className="w-full border border-gray-200 rounded  px-3 py-2.5 mt-1 outline-indigo-500 font-light"
-              placeholder="Enter your contact number"
-              required
-            />
+            <div className="flex items-center border border-gray-200 rounded px-3 py-2.5 mt-1 focus-within:border-indigo-500 transition">
+              <FaPhone className="text-indigo-500 mr-2" />
+              <input
+                type="text"
+                id="contact"
+                onChange={(e) => setContact(e.target.value)}
+                value={contact}
+                className="w-full outline-none font-light"
+                placeholder="Enter your contact number"
+                required
+              />
+            </div>
           </div>
 
           {/* address */}
           <div className="w-full mt-6">
-            <label htmlFor="address" className="font-medium text-gray-500">
+            <label htmlFor="address" className="font-medium text-gray-600">
               Address
             </label>
-            <input
-              type="text"
-              id="address"
-              onChange={(e) => setAddress(e.target.value)}
-              value={address}
-              className="w-full border border-gray-200 rounded  px-3 py-2.5 mt-1 outline-indigo-500 font-light"
-              placeholder="Enter your hotel address"
-              required
-            />
+            <div className="flex items-center border border-gray-200 rounded px-3 py-2.5 mt-1 focus-within:border-indigo-500 transition">
+              <FaMapMarkerAlt className="text-indigo-500 mr-2" />
+              <input
+                type="text"
+                id="address"
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+                className="w-full outline-none font-light"
+                placeholder="Enter your hotel address"
+                required
+              />
+            </div>
           </div>
-          {/* select city drop down */}
-          <div className="w-full mt-4 max-w-6- mr-auto">
-            <label htmlFor="city" className="font-medium text-gray-500">
+
+          {/* select city */}
+          <div className="w-full mt-6">
+            <label htmlFor="city" className="font-medium text-gray-600">
               City
             </label>
-            <select
-              id="city"
-              onChange={(e) => setCity(e.target.value)}
-              value={city}
-              className="w-full border border-gray-200 rounded  px-3 py-2.5 mt-1 outline-indigo-500 font-light"
-              required
-            >
-              <option value="">Select your city</option>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
+            <div className="flex items-center border border-gray-200 rounded px-3 py-2.5 mt-1 focus-within:border-indigo-500 transition">
+              <FaCity className="text-indigo-500 mr-2" />
+              <select
+                id="city"
+                onChange={(e) => setCity(e.target.value)}
+                value={city}
+                className="w-full outline-none font-light bg-transparent"
+                required
+              >
+                <option value="">Select your city</option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <button className="mt-6 px-6 py-2 bg-indigo-500 text-white rounded mr-auto cursor-pointer hover:bg-indigo-600 transition-all">
+
+          <button className="mt-8 px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg transition-all duration-300">
             Register
           </button>
         </div>
