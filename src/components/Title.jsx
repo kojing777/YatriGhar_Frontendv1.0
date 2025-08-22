@@ -7,7 +7,6 @@ const Title = ({ title, subTitle, align, font }) => {
         align === "left" && "md:items-start md:text-left"
       } `}
     >
-      
       <h1 className={`text-4xl md:text-[4xl] ${font || "font-playfair"}`}>
         {title}
       </h1>
