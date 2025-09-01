@@ -5,16 +5,16 @@ import { roomsDummyData } from "../../assets/assets";
 import toast from "react-hot-toast";
 
 const ListRooms = () => {
-  const [rooms, setRooms] = useState([]); // Start with empty array
+  const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [toggleLoading, setToggleLoading] = useState(null); // roomId being toggled
-  const {currency } = useAppContext();
+  const [toggleLoading, setToggleLoading] = useState(null);
+  const { currency } = useAppContext();
 
   // Fetching rooms of the hotel owner - now using static data
   const fetchRooms = () => {
     console.log("Fetching rooms...", roomsDummyData);
     setLoading(true);
-    
+
     // Simulate a small delay for realistic loading experience
     setTimeout(() => {
       setRooms(roomsDummyData);
@@ -23,18 +23,15 @@ const ListRooms = () => {
     }, 500);
   };
 
-  
-  // Optimistic UI for toggling room availability - now purely frontend
   const toggleAvailability = async (roomId) => {
     setToggleLoading(roomId);
-    // Optimistically update UI
+
     setRooms((prevRooms) =>
       prevRooms.map((room) =>
         room._id === roomId ? { ...room, isAvailable: !room.isAvailable } : room
       )
     );
-    
-    // Simulate API call delay and response
+
     setTimeout(() => {
       toast.success("Room availability updated (Demo Mode)");
       setToggleLoading(null);
@@ -42,7 +39,7 @@ const ListRooms = () => {
   };
 
   useEffect(() => {
-    // In demo mode, always fetch rooms regardless of user authentication
+  
     fetchRooms();
   }, []);
 
@@ -58,14 +55,20 @@ const ListRooms = () => {
 
       <div className="w-full max-w-3xl text-left border border-gray-300 rounded-lg max-h-80 overflow-y-scroll">
         {loading ? (
-          <div className="flex justify-center items-center py-10">Loading...</div>
+          <div className="flex justify-center items-center py-10">
+            Loading...
+          </div>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr className="bg-gray-100">
                 <th className="py-3 px-4 text-gray-800 font-medium">Name</th>
-                <th className="py-3 px-4 text-gray-800 font-medium">Facility</th>
-                <th className="py-3 px-4 text-gray-800 font-medium">Price /Night</th>
+                <th className="py-3 px-4 text-gray-800 font-medium">
+                  Facility
+                </th>
+                <th className="py-3 px-4 text-gray-800 font-medium">
+                  Price /Night
+                </th>
                 <th className="py-3 px-4 text-gray-800 font-medium">Actions</th>
               </tr>
             </thead>
