@@ -74,7 +74,7 @@ const Hero = () => {
         {/* Welcome Tag */}
         <div className="bg-white/80 text-gray-800 px-4 py-1 rounded-full inline-flex items-center gap-2 font-medium tracking-wide shadow-md animate-fadeIn">
           <span className="text-amber-600">🏔️</span>
-          <span className="font-semibold">Welcome to Himalayan Stays</span>
+          <span className="font-semibold">Welcome to Himalayas Ghar</span>
         </div>
 
         {/* Main Heading */}
